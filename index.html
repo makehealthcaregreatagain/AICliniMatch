@@ -32,6 +32,16 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #9ca3af; /* Tailwind's gray-400 */
         }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #advanced-search-toggle .fa-chevron-down {
+            transition: transform 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -63,12 +73,56 @@
                     <h2 class="text-3xl sm:text-4xl font-bold text-gray-800">Find the right specialist, faster.</h2>
                     <p class="mt-4 text-lg text-gray-600">Search by condition, procedure, phenotype, or specialist name to find verified experts across the country.</p>
                     <div class="mt-8 flex rounded-lg shadow-lg overflow-hidden">
-                        <input id="main-search-input" type="text" placeholder="e.g., “post-radiation mandibular osteomyelitis”" class="w-full px-6 py-4 text-lg border-0 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                        <button onclick="showScreen('screen-results')" class="bg-blue-600 text-white px-8 py-4 font-semibold hover:bg-blue-700 transition duration-300">
+                        <input id="main-search-input" type="text" placeholder="e.g., “cystic fibrosis”" class="w-full px-6 py-4 text-lg border-0 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <button onclick="performSearch()" class="bg-blue-600 text-white px-8 py-4 font-semibold hover:bg-blue-700 transition duration-300">
                             <i class="fa-solid fa-search mr-2"></i> Search
                         </button>
                     </div>
-                    <p class="mt-4 text-sm text-gray-500">Your recent searches: <a href="#" class="text-blue-600 hover:underline">pediatric osteomyelitis</a>, <a href="#" class="text-blue-600 hover:underline">BRCA2 mutation</a></p>
+
+                    <!-- Advanced Search Toggle -->
+                    <div class="text-center mt-4">
+                        <a id="advanced-search-toggle" onclick="toggleAdvancedSearch()" class="text-blue-600 hover:underline cursor-pointer text-sm font-medium">
+                            Advanced Search <i class="fa-solid fa-chevron-down text-xs ml-1"></i>
+                        </a>
+                    </div>
+
+                    <!-- Advanced Search Form (hidden by default) -->
+                    <div id="advanced-search-form" class="hidden mt-4 bg-gray-50 p-6 rounded-lg shadow-inner text-left">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="adv-location" class="block text-sm font-medium text-gray-700">Geography</label>
+                                <input type="text" id="adv-location" placeholder="City, State, or Zip" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label for="adv-institution" class="block text-sm font-medium text-gray-700">Institution</label>
+                                <input type="text" id="adv-institution" placeholder="e.g., 'Stanford Health Care'" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="adv-trials" class="block text-sm font-medium text-gray-700">Clinical Trial Keywords</label>
+                                <input type="text" id="adv-trials" placeholder="Search by keyword or NCT ID (e.g., 'immunotherapy', 'NCT04512345')" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                        </div>
+                        <div class="mt-6 flex items-center justify-start space-x-6">
+                            <label class="flex items-center text-sm font-medium text-gray-700">
+                                <input type="checkbox" id="adv-telehealth" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                <span class="ml-2">Telehealth Available</span>
+                            </label>
+                            <label class="flex items-center text-sm font-medium text-gray-700">
+                                <input type="checkbox" id="adv-accepting" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                <span class="ml-2">Accepting New Referrals</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 text-sm text-gray-600 bg-gray-100 p-4 rounded-lg text-left">
+                        <h3 class="font-semibold text-gray-700 mb-2">Recent Searches:</h3>
+                        <p class="text-gray-500">
+                            <a href="#" onclick="runDemoSearch('osteoradionecrosis')" class="text-blue-600 hover:underline">osteoradionecrosis</a>, 
+                            <a href="#" onclick="runDemoSearch('huntington\'s disease')" class="text-blue-600 hover:underline">huntington's disease</a>, 
+                            <a href="#" onclick="runDemoSearch('cystic fibrosis')" class="text-blue-600 hover:underline">cystic fibrosis</a>, 
+                            <a href="#" onclick="runDemoSearch('ehlers-danlos syndrome')" class="text-blue-600 hover:underline">ehlers-danlos syndrome</a>
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -76,7 +130,7 @@
             <div id="screen-results" class="screen animate-fade-in">
                 <div class="flex items-center mb-6">
                     <button onclick="showScreen('screen-search')" class="text-gray-500 hover:text-blue-600 mr-4 p-2 rounded-full hover:bg-gray-100"><i class="fa-solid fa-arrow-left"></i></button>
-                    <h2 class="text-2xl font-bold">Results for: <span class="text-blue-600">"post-radiation mandibular osteomyelitis"</span></h2>
+                    <h2 class="text-2xl font-bold">Results for: <span id="search-results-term" class="text-blue-600">""</span></h2>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
                     <!-- Filters Column -->
@@ -109,9 +163,9 @@
                         </div>
                     </aside>
                     <!-- Results List -->
-                    <div class="lg:col-span-3 space-y-4">
+                    <div id="results-list" class="lg:col-span-3 space-y-4">
                         <!-- Specialist Card 1 -->
-                        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 flex items-start space-x-6">
+                        <div class="specialist-card bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 flex items-start space-x-6" data-keywords="oral cancer, jaw reconstruction, osteoradionecrosis, post-radiation mandibular osteomyelitis, stanford health care, palo alto, nct04512345, nct05876543, immunotherapy, imaging" data-telehealth="false" data-accepting="true">
                             <img src="https://placehold.co/80x80/93C5FD/3B82F6?text=EV" alt="Dr. Vance" class="w-20 h-20 rounded-full border-4 border-white shadow-sm">
                             <div class="flex-grow">
                                 <div class="flex justify-between items-center">
@@ -126,24 +180,81 @@
                                     <span class="inline-block bg-blue-100 border border-blue-300 rounded-full px-3 py-1 text-sm font-semibold text-blue-800 mr-2 mb-2">Osteoradionecrosis</span>
                                 </div>
                             </div>
-                            <button onclick="showScreen('screen-profile')" class="bg-blue-600 text-white px-4 py-2 h-fit self-center rounded-lg font-semibold hover:bg-blue-700 transition">View & Refer</button>
+                            <button onclick="showProfile('vance')" class="bg-blue-600 text-white px-4 py-2 h-fit self-center rounded-lg font-semibold hover:bg-blue-700 transition">View & Refer</button>
                         </div>
                         <!-- Specialist Card 2 -->
-                        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 flex items-start space-x-6">
+                        <div class="specialist-card bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 flex items-start space-x-6" data-keywords="maxillofacial trauma, head & neck reconstruction, ucsf medical center, san francisco" data-telehealth="false" data-accepting="false">
                              <img src="https://placehold.co/80x80/A5B4FC/4338CA?text=JC" alt="Dr. Chen" class="w-20 h-20 rounded-full border-4 border-white shadow-sm">
                             <div class="flex-grow">
                                 <div class="flex justify-between items-center">
                                     <h4 class="text-xl font-bold">Dr. Jian Chen, MD</h4>
-                                    <span class="text-sm bg-green-100 text-green-800 font-medium px-2 py-1 rounded-full">Accepting Referrals</span>
+                                    <span class="text-sm bg-yellow-100 text-yellow-800 font-medium px-2 py-1 rounded-full">Waitlist</span>
                                 </div>
                                 <p class="text-blue-700">Reconstructive Microsurgery</p>
                                 <p class="text-gray-600 text-sm mt-1"><i class="fa-solid fa-hospital mr-2"></i>UCSF Medical Center, San Francisco, CA</p>
                                 <div class="mt-3">
-                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Maxillofacial Trauma</span>
+                                    <span class="inline-block bg-blue-100 border border-blue-300 rounded-full px-3 py-1 text-sm font-semibold text-blue-800 mr-2 mb-2">Maxillofacial Trauma</span>
                                     <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Head & Neck Reconstruction</span>
                                 </div>
                             </div>
+                             <button onclick="showProfile('chen')" class="bg-blue-600 text-white px-4 py-2 h-fit self-center rounded-lg font-semibold hover:bg-blue-700 transition">View & Refer</button>
+                        </div>
+                        <!-- Specialist Card 3 -->
+                        <div class="specialist-card bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 flex items-start space-x-6" data-keywords="huntington's disease, parkinson's, dystonia, neurology, johns hopkins hospital, baltimore, nct06123456, gene therapy" data-telehealth="true" data-accepting="true">
+                             <img src="https://placehold.co/80x80/FDBA74/C2410C?text=MT" alt="Dr. Thorne" class="w-20 h-20 rounded-full border-4 border-white shadow-sm">
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-xl font-bold">Dr. Marcus Thorne, MD</h4>
+                                    <span class="text-sm bg-green-100 text-green-800 font-medium px-2 py-1 rounded-full">Accepting Referrals</span>
+                                </div>
+                                <p class="text-blue-700">Movement Disorders Neurology</p>
+                                <p class="text-gray-600 text-sm mt-1"><i class="fa-solid fa-hospital mr-2"></i>Johns Hopkins Hospital, Baltimore, MD</p>
+                                <div class="mt-3">
+                                    <span class="inline-block bg-blue-100 border border-blue-300 rounded-full px-3 py-1 text-sm font-semibold text-blue-800 mr-2 mb-2">Huntington's Disease</span>
+                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Parkinson's Disease</span>
+                                </div>
+                            </div>
+                             <button onclick="showProfile('thorne')" class="bg-blue-600 text-white px-4 py-2 h-fit self-center rounded-lg font-semibold hover:bg-blue-700 transition">View & Refer</button>
+                        </div>
+                         <!-- Specialist Card 4 -->
+                        <div class="specialist-card bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 flex items-start space-x-6" data-keywords="cystic fibrosis, bronchiectasis, mucus clearance, pulmonology, national jewish health, denver, nct05554321, modulator" data-telehealth="true" data-accepting="true">
+                             <img src="https://placehold.co/80x80/86EFAC/15803D?text=LP" alt="Dr. Petrova" class="w-20 h-20 rounded-full border-4 border-white shadow-sm">
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-xl font-bold">Dr. Lena Petrova, MD</h4>
+                                    <span class="text-sm bg-green-100 text-green-800 font-medium px-2 py-1 rounded-full">Accepting Referrals</span>
+                                </div>
+                                <p class="text-blue-700">Adult Cystic Fibrosis Program</p>
+                                <p class="text-gray-600 text-sm mt-1"><i class="fa-solid fa-hospital mr-2"></i>National Jewish Health, Denver, CO</p>
+                                <div class="mt-3">
+                                    <span class="inline-block bg-blue-100 border border-blue-300 rounded-full px-3 py-1 text-sm font-semibold text-blue-800 mr-2 mb-2">Cystic Fibrosis</span>
+                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Bronchiectasis</span>
+                                </div>
+                            </div>
+                             <button onclick="showProfile('petrova')" class="bg-blue-600 text-white px-4 py-2 h-fit self-center rounded-lg font-semibold hover:bg-blue-700 transition">View & Refer</button>
+                        </div>
+                        <!-- Specialist Card 5 -->
+                        <div class="specialist-card bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 flex items-start space-x-6" data-keywords="ehlers-danlos syndrome, marfan syndrome, genetics, connective tissue, mayo clinic, rochester" data-telehealth="false" data-accepting="false">
+                             <img src="https://placehold.co/80x80/F9A8D4/9D266A?text=SD" alt="Dr. Diaz" class="w-20 h-20 rounded-full border-4 border-white shadow-sm">
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-xl font-bold">Dr. Samuel Diaz, MD</h4>
+                                    <span class="text-sm bg-red-100 text-red-800 font-medium px-2 py-1 rounded-full">Not Accepting</span>
+                                </div>
+                                <p class="text-blue-700">Connective Tissue Disorders Clinic</p>
+                                <p class="text-gray-600 text-sm mt-1"><i class="fa-solid fa-hospital mr-2"></i>Mayo Clinic, Rochester, MN</p>
+                                <div class="mt-3">
+                                    <span class="inline-block bg-blue-100 border border-blue-300 rounded-full px-3 py-1 text-sm font-semibold text-blue-800 mr-2 mb-2">Ehlers-Danlos Syndrome</span>
+                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Marfan Syndrome</span>
+                                </div>
+                            </div>
                              <button class="bg-gray-400 text-white px-4 py-2 h-fit self-center rounded-lg font-semibold cursor-not-allowed">View & Refer</button>
+                        </div>
+
+                        <div id="no-results-message" class="hidden text-center py-10 bg-gray-50 rounded-lg">
+                            <i class="fa-solid fa-magnifying-glass text-4xl text-gray-400"></i>
+                            <h3 class="mt-4 text-xl font-semibold text-gray-700">No Specialists Found</h3>
+                            <p class="mt-1 text-gray-500">Try adjusting your search term or filters.</p>
                         </div>
                     </div>
                 </div>
@@ -158,11 +269,11 @@
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                     <!-- Profile Header -->
                     <div class="bg-blue-50 p-8 md:flex items-center space-x-8">
-                        <img src="https://placehold.co/128x128/93C5FD/3B82F6?text=EV" alt="Dr. Vance" class="w-32 h-32 rounded-full border-4 border-white shadow-lg mx-auto md:mx-0">
+                        <img id="profile-img" src="" alt="Doctor" class="w-32 h-32 rounded-full border-4 border-white shadow-lg mx-auto md:mx-0">
                         <div>
-                            <h3 class="text-3xl font-bold mt-4 md:mt-0">Dr. Eleanor Vance, MD, PhD</h3>
-                            <p class="text-blue-700 text-lg">Professor and Chair, Head & Neck Surgical Oncology</p>
-                            <p class="text-gray-600"><i class="fa-solid fa-hospital mr-2"></i>Stanford Health Care, Palo Alto, CA</p>
+                            <h3 id="profile-name" class="text-3xl font-bold mt-4 md:mt-0"></h3>
+                            <p id="profile-subspecialty" class="text-blue-700 text-lg"></p>
+                            <p id="profile-location" class="text-gray-600"></p>
                         </div>
                         <div class="md:ml-auto text-center mt-6 md:mt-0">
                              <button onclick="showScreen('screen-referral')" class="w-full bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition"><i class="fa-solid fa-paper-plane mr-2"></i> Initiate Referral</button>
@@ -172,27 +283,18 @@
                     <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div class="md:col-span-2">
                              <h4 class="font-bold text-xl mb-4 border-b pb-2">Areas of Expertise</h4>
-                             <p class="text-gray-600 mb-4">Validated expertise in treating complex conditions of the head and neck, with a focus on post-treatment complications and quality of life.</p>
-                             <div class="flex flex-wrap gap-2">
-                                <span class="bg-blue-100 border border-blue-300 text-blue-800 px-3 py-1 rounded-full font-medium">Osteoradionecrosis of the Mandible</span>
-                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Advanced Oral Cavity Cancer</span>
-                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Microvascular Reconstruction</span>
-                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Robotic Surgery (TORS)</span>
-                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Salivary Gland Tumors</span>
-                             </div>
+                             <p id="profile-bio" class="text-gray-600 mb-4"></p>
+                             <div id="profile-tags" class="flex flex-wrap gap-2"></div>
                              <h4 class="font-bold text-xl mb-4 border-b pb-2 mt-8">Ongoing Clinical Trials</h4>
-                             <ul class="list-disc list-inside text-gray-600 space-y-2">
-                                 <li><span class="font-semibold text-gray-800">NCT04512345:</span> A Phase II study of immunotherapy in recurrent oral cancers.</li>
-                                 <li><span class="font-semibold text-gray-800">NCT05876543:</span> Novel imaging techniques for surgical margin assessment.</li>
-                             </ul>
+                             <ul id="profile-trials" class="list-disc list-inside text-gray-600 space-y-2"></ul>
                         </div>
                         <div class="bg-gray-50 p-6 rounded-lg">
                             <h4 class="font-bold text-xl mb-4">Referral Information</h4>
                             <div class="space-y-4 text-sm">
-                                <p><strong class="block text-gray-800">Accepted Referrals:</strong> Confirmed cases of mandibular osteoradionecrosis, complex post-radiation defects.</p>
-                                <p><strong class="block text-gray-800">Intake Protocol:</strong> Please include recent imaging (CT/MRI reports) and pathology reports with referral packet.</p>
-                                <p><strong class="block text-gray-800">Est. Wait Time:</strong> <span class="font-semibold text-red-600">4-6 weeks</span></p>
-                                <p><strong class="block text-gray-800">Contact:</strong> 650-555-1234 (Clinic Coordinator)</p>
+                                <p><strong class="block text-gray-800">Accepted Referrals:</strong> <span id="referral-accepted"></span></p>
+                                <p><strong class="block text-gray-800">Intake Protocol:</strong> <span id="referral-protocol"></span></p>
+                                <p><strong class="block text-gray-800">Est. Wait Time:</strong> <span id="referral-wait_time" class="font-semibold text-red-600"></span></p>
+                                <p><strong class="block text-gray-800">Contact:</strong> <span id="referral-contact"></span></p>
                             </div>
                         </div>
                     </div>
@@ -208,16 +310,16 @@
                 <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
                     <div class="grid grid-cols-2 gap-8 text-sm mb-8">
                         <p><strong>From:</strong><br>Dr. Anya Sharma<br>Palo Alto Primary Care</p>
-                        <p><strong>To:</strong><br>Dr. Eleanor Vance<br>Stanford Health Care</p>
+                        <p><strong>To:</strong><br><span id="referral-to-name"></span><br><span id="referral-to-location"></span></p>
                     </div>
                     <div class="space-y-6">
                         <div>
                             <label class="font-semibold block mb-1">Patient Name</label>
-                            <input type="text" value="John Doe" class="w-full p-3 border rounded-md bg-gray-50">
+                            <input type="text" placeholder="Enter patient name" class="w-full p-3 border rounded-md bg-gray-50">
                         </div>
                          <div>
                             <label class="font-semibold block mb-1">Reason for Referral</label>
-                            <textarea class="w-full p-3 border rounded-md bg-gray-50 h-28">Patient presents with suspected post-radiation mandibular osteomyelitis following treatment for squamous cell carcinoma of the tongue. Requesting consultation for evaluation and management.</textarea>
+                            <textarea class="w-full p-3 border rounded-md bg-gray-50 h-28" placeholder="Enter reason for referral..."></textarea>
                         </div>
                         <div>
                             <label class="font-semibold block mb-1">Attach Documents</label>
@@ -238,24 +340,200 @@
     </div>
 
     <script>
-        // Store the previously active screen
-        let lastScreen = 'screen-search';
+        const specialists = {
+            'vance': {
+                name: 'Dr. Eleanor Vance, MD, PhD',
+                img: 'https://placehold.co/128x128/93C5FD/3B82F6?text=EV',
+                sub_specialty: 'Professor and Chair, Head & Neck Surgical Oncology',
+                location: 'Stanford Health Care, Palo Alto, CA',
+                bio: 'Validated expertise in treating complex conditions of the head and neck, with a focus on post-treatment complications and quality of life.',
+                tags: ['Osteoradionecrosis of the Mandible', 'Advanced Oral Cavity Cancer', 'Microvascular Reconstruction', 'Robotic Surgery (TORS)', 'Salivary Gland Tumors'],
+                trials: [
+                    { id: 'NCT04512345', desc: 'A Phase II study of immunotherapy in recurrent oral cancers.' },
+                    { id: 'NCT05876543', desc: 'Novel imaging techniques for surgical margin assessment.' }
+                ],
+                referral_info: {
+                    accepted: 'Confirmed cases of mandibular osteoradionecrosis, complex post-radiation defects.',
+                    protocol: 'Please include recent imaging (CT/MRI reports) and pathology reports with referral packet.',
+                    wait_time: '4-6 weeks',
+                    contact: '650-555-1234 (Clinic Coordinator)'
+                }
+            },
+            'chen': {
+                name: 'Dr. Jian Chen, MD',
+                img: 'https://placehold.co/128x128/A5B4FC/4338CA?text=JC',
+                sub_specialty: 'Professor, Reconstructive Microsurgery',
+                location: 'UCSF Medical Center, San Francisco, CA',
+                bio: 'Specializes in complex reconstructions following major trauma or cancer resection in the head and neck region.',
+                tags: ['Maxillofacial Trauma', 'Head & Neck Reconstruction', 'Free Flap Surgery'],
+                trials: [],
+                referral_info: {
+                    accepted: 'Complex facial trauma, patients requiring microsurgical reconstruction.',
+                    protocol: 'Referrals accepted through UCSF provider portal.',
+                    wait_time: '8-10 weeks (waitlisted)',
+                    contact: '415-555-5678 (Surgical Coordinator)'
+                }
+            },
+             'thorne': {
+                name: 'Dr. Marcus Thorne, MD',
+                img: 'https://placehold.co/128x128/FDBA74/C2410C?text=MT',
+                sub_specialty: 'Director, Movement Disorders Center',
+                location: 'Johns Hopkins Hospital, Baltimore, MD',
+                bio: 'Leading expert in the diagnosis and management of Huntington\'s disease and other neurodegenerative movement disorders.',
+                tags: ["Huntington's Disease", "Parkinson's Disease", "Dystonia", "Deep Brain Stimulation"],
+                trials: [
+                    { id: 'NCT06123456', desc: 'Gene therapy trial for early-stage Huntington\'s disease.' },
+                ],
+                referral_info: {
+                    accepted: 'Genetically confirmed Huntington\'s disease, complex Parkinsonism.',
+                    protocol: 'Genetic test results must be included in referral packet.',
+                    wait_time: '2-3 weeks',
+                    contact: '410-555-9876 (Neurology Intake)'
+                }
+            },
+             'petrova': {
+                name: 'Dr. Lena Petrova, MD',
+                img: 'https://placehold.co/128x128/86EFAC/15803D?text=LP',
+                sub_specialty: 'Co-Director, Adult Cystic Fibrosis Program',
+                location: 'National Jewish Health, Denver, CO',
+                bio: 'Focuses on managing adult patients with Cystic Fibrosis, including advanced lung disease and post-transplant care.',
+                tags: ['Cystic Fibrosis', 'Bronchiectasis', 'Mucus Clearance Therapies', 'Lung Transplant Evaluation'],
+                trials: [
+                     { id: 'NCT05554321', desc: 'Study of novel modulator therapies in CF patients with rare mutations.' },
+                ],
+                referral_info: {
+                    accepted: 'Adults (18+) with confirmed diagnosis of Cystic Fibrosis.',
+                    protocol: 'Sweat chloride test and mutation analysis required.',
+                    wait_time: '1-2 weeks',
+                    contact: '303-555-1122 (CF Clinic Navigator)'
+                }
+            }
+        };
 
         function showScreen(screenId) {
-            // Hide all screens
-            document.querySelectorAll('.screen').forEach(screen => {
-                if (screen.classList.contains('active')) {
-                    lastScreen = screen.id; // Update last screen before hiding
-                }
-                screen.classList.remove('active');
-            });
-            // Show the target screen
+            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
             const targetScreen = document.getElementById(screenId);
             if (targetScreen) {
                 targetScreen.classList.add('active');
-                window.scrollTo(0, 0); // Scroll to top on screen change
+                window.scrollTo(0, 0);
             }
         }
+
+        function toggleAdvancedSearch() {
+            const form = document.getElementById('advanced-search-form');
+            const toggleIcon = document.querySelector('#advanced-search-toggle i');
+            form.classList.toggle('hidden');
+            if (form.classList.contains('hidden')) {
+                toggleIcon.classList.remove('rotate-180');
+            } else {
+                toggleIcon.classList.add('rotate-180');
+            }
+        }
+
+        function performSearch() {
+            // Read from all search fields
+            const searchTerm = document.getElementById('main-search-input').value.toLowerCase().trim();
+            const locationTerm = document.getElementById('adv-location').value.toLowerCase().trim();
+            const institutionTerm = document.getElementById('adv-institution').value.toLowerCase().trim();
+            const trialsTerm = document.getElementById('adv-trials').value.toLowerCase().trim();
+            const telehealthChecked = document.getElementById('adv-telehealth').checked;
+            const acceptingChecked = document.getElementById('adv-accepting').checked;
+            
+            document.getElementById('search-results-term').textContent = `"${searchTerm || 'All Specialists'}"`;
+            
+            const specialistCards = document.querySelectorAll('.specialist-card');
+            let resultsFound = false;
+
+            specialistCards.forEach(card => {
+                const keywords = card.getAttribute('data-keywords').toLowerCase();
+                const telehealth = card.getAttribute('data-telehealth') === 'true';
+                const accepting = card.getAttribute('data-accepting') === 'true';
+
+                // Check each condition
+                const mainMatch = !searchTerm || keywords.includes(searchTerm);
+                const locationMatch = !locationTerm || keywords.includes(locationTerm);
+                const institutionMatch = !institutionTerm || keywords.includes(institutionTerm);
+                const trialsMatch = !trialsTerm || keywords.includes(trialsTerm);
+                const telehealthMatch = !telehealthChecked || telehealth;
+                const acceptingMatch = !acceptingChecked || accepting;
+
+                // Show card if all conditions are met
+                if (mainMatch && locationMatch && institutionMatch && trialsMatch && telehealthMatch && acceptingMatch) {
+                    card.style.display = 'flex';
+                    resultsFound = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('no-results-message').style.display = resultsFound ? 'none' : 'block';
+            showScreen('screen-results');
+        }
+
+        function runDemoSearch(term) {
+            document.getElementById('main-search-input').value = term;
+            // Clear advanced fields for demo clicks
+            document.getElementById('adv-location').value = '';
+            document.getElementById('adv-institution').value = '';
+            document.getElementById('adv-trials').value = '';
+            document.getElementById('adv-telehealth').checked = false;
+            document.getElementById('adv-accepting').checked = false;
+            performSearch();
+        }
+
+        function showProfile(specialistId) {
+            const data = specialists[specialistId];
+            if (!data) return;
+
+            // Populate profile header
+            document.getElementById('profile-img').src = data.img;
+            document.getElementById('profile-name').textContent = data.name;
+            document.getElementById('profile-subspecialty').textContent = data.sub_specialty;
+            document.getElementById('profile-location').innerHTML = `<i class="fa-solid fa-hospital mr-2"></i>${data.location}`;
+            
+            // Populate referral form info
+            document.getElementById('referral-to-name').textContent = data.name;
+            document.getElementById('referral-to-location').textContent = data.location;
+
+
+            // Populate profile details
+            document.getElementById('profile-bio').textContent = data.bio;
+            
+            const tagsContainer = document.getElementById('profile-tags');
+            tagsContainer.innerHTML = '';
+            data.tags.forEach((tag, index) => {
+                const isPrimary = index === 0;
+                const tagEl = document.createElement('span');
+                tagEl.className = `${isPrimary ? 'bg-blue-100 border border-blue-300 text-blue-800' : 'bg-gray-200 text-gray-800'} px-3 py-1 rounded-full font-medium`;
+                tagEl.textContent = tag;
+                tagsContainer.appendChild(tagEl);
+            });
+
+            const trialsContainer = document.getElementById('profile-trials');
+            trialsContainer.innerHTML = '';
+            if (data.trials.length > 0) {
+                data.trials.forEach(trial => {
+                    const trialEl = document.createElement('li');
+                    trialEl.innerHTML = `<span class="font-semibold text-gray-800">${trial.id}:</span> ${trial.desc}`;
+                    trialsContainer.appendChild(trialEl);
+                });
+            } else {
+                trialsContainer.innerHTML = '<li>No active clinical trials listed.</li>';
+            }
+
+            // Populate referral info box
+            document.getElementById('referral-accepted').textContent = data.referral_info.accepted;
+            document.getElementById('referral-protocol').textContent = data.referral_info.protocol;
+            document.getElementById('referral-wait_time').textContent = data.referral_info.wait_time;
+            document.getElementById('referral-contact').textContent = data.referral_info.contact;
+
+            showScreen('screen-profile');
+        }
+
+        // Initialize the first screen
+        document.addEventListener('DOMContentLoaded', () => {
+            showScreen('screen-search');
+        });
     </script>
 
 </body>
