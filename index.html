@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AICliniMatch - Dashboard Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Tailwind's gray-50 */
+        }
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+        /* Custom scrollbar for aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db; /* Tailwind's gray-300 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af; /* Tailwind's gray-400 */
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Main Application Wrapper -->
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white shadow-sm sticky top-0 z-50">
+            <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-600 text-white flex items-center justify-center rounded-full">
+                        <i class="fa-solid fa-share-nodes"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-800">AICliniMatch</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-600 hidden sm:block">Dr. Anya Sharma</span>
+                    <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=AS" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-gray-200">
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow container mx-auto p-4 sm:p-6 lg:p-8">
+            
+            <!-- SCREEN 1: Search Dashboard -->
+            <div id="screen-search" class="screen active animate-fade-in">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-800">Find the right specialist, faster.</h2>
+                    <p class="mt-4 text-lg text-gray-600">Search by condition, procedure, phenotype, or specialist name to find verified experts across the country.</p>
+                    <div class="mt-8 flex rounded-lg shadow-lg overflow-hidden">
+                        <input id="main-search-input" type="text" placeholder="e.g., “post-radiation mandibular osteomyelitis”" class="w-full px-6 py-4 text-lg border-0 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <button onclick="showScreen('screen-results')" class="bg-blue-600 text-white px-8 py-4 font-semibold hover:bg-blue-700 transition duration-300">
+                            <i class="fa-solid fa-search mr-2"></i> Search
+                        </button>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-500">Your recent searches: <a href="#" class="text-blue-600 hover:underline">pediatric osteomyelitis</a>, <a href="#" class="text-blue-600 hover:underline">BRCA2 mutation</a></p>
+                </div>
+            </div>
+
+            <!-- SCREEN 2: Search Results -->
+            <div id="screen-results" class="screen animate-fade-in">
+                <div class="flex items-center mb-6">
+                    <button onclick="showScreen('screen-search')" class="text-gray-500 hover:text-blue-600 mr-4 p-2 rounded-full hover:bg-gray-100"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 class="text-2xl font-bold">Results for: <span class="text-blue-600">"post-radiation mandibular osteomyelitis"</span></h2>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    <!-- Filters Column -->
+                    <aside class="lg:col-span-1 bg-white p-6 rounded-xl shadow-md h-fit">
+                        <h3 class="font-bold text-lg mb-4">Filter Results</h3>
+                        <!-- Location Filter -->
+                        <div class="mb-6">
+                            <label class="block font-semibold mb-2 text-sm">Location</label>
+                            <input type="text" placeholder="City, State, or Zip" class="w-full p-2 border rounded-md text-sm">
+                            <label class="flex items-center mt-2 text-sm"><input type="checkbox" class="mr-2"> Telehealth Available</label>
+                        </div>
+                        <!-- Insurance Filter -->
+                        <div class="mb-6">
+                            <label class="block font-semibold mb-2 text-sm">Insurance</label>
+                            <select class="w-full p-2 border rounded-md text-sm">
+                                <option>Aetna PPO</option>
+                                <option>Blue Cross Blue Shield</option>
+                                <option>Cigna</option>
+                            </select>
+                        </div>
+                        <!-- Urgency Filter -->
+                        <div>
+                            <label class="block font-semibold mb-2 text-sm">Wait Time</label>
+                            <select class="w-full p-2 border rounded-md text-sm">
+                                <option>Any</option>
+                                <option>Under 2 weeks</option>
+                                <option>Under 1 month</option>
+                                <option>1-3 months</option>
+                            </select>
+                        </div>
+                    </aside>
+                    <!-- Results List -->
+                    <div class="lg:col-span-3 space-y-4">
+                        <!-- Specialist Card 1 -->
+                        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 flex items-start space-x-6">
+                            <img src="https://placehold.co/80x80/93C5FD/3B82F6?text=EV" alt="Dr. Vance" class="w-20 h-20 rounded-full border-4 border-white shadow-sm">
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-xl font-bold">Dr. Eleanor Vance, MD, PhD</h4>
+                                    <span class="text-sm bg-green-100 text-green-800 font-medium px-2 py-1 rounded-full">Accepting Referrals</span>
+                                </div>
+                                <p class="text-blue-700">Head & Neck Surgical Oncology</p>
+                                <p class="text-gray-600 text-sm mt-1"><i class="fa-solid fa-hospital mr-2"></i>Stanford Health Care, Palo Alto, CA</p>
+                                <div class="mt-3">
+                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Oral Cancer</span>
+                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Jaw Reconstruction</span>
+                                    <span class="inline-block bg-blue-100 border border-blue-300 rounded-full px-3 py-1 text-sm font-semibold text-blue-800 mr-2 mb-2">Osteoradionecrosis</span>
+                                </div>
+                            </div>
+                            <button onclick="showScreen('screen-profile')" class="bg-blue-600 text-white px-4 py-2 h-fit self-center rounded-lg font-semibold hover:bg-blue-700 transition">View & Refer</button>
+                        </div>
+                        <!-- Specialist Card 2 -->
+                        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 flex items-start space-x-6">
+                             <img src="https://placehold.co/80x80/A5B4FC/4338CA?text=JC" alt="Dr. Chen" class="w-20 h-20 rounded-full border-4 border-white shadow-sm">
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-xl font-bold">Dr. Jian Chen, MD</h4>
+                                    <span class="text-sm bg-green-100 text-green-800 font-medium px-2 py-1 rounded-full">Accepting Referrals</span>
+                                </div>
+                                <p class="text-blue-700">Reconstructive Microsurgery</p>
+                                <p class="text-gray-600 text-sm mt-1"><i class="fa-solid fa-hospital mr-2"></i>UCSF Medical Center, San Francisco, CA</p>
+                                <div class="mt-3">
+                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Maxillofacial Trauma</span>
+                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Head & Neck Reconstruction</span>
+                                </div>
+                            </div>
+                             <button class="bg-gray-400 text-white px-4 py-2 h-fit self-center rounded-lg font-semibold cursor-not-allowed">View & Refer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCREEN 3: Expert Profile -->
+            <div id="screen-profile" class="screen animate-fade-in">
+                 <div class="flex items-center mb-6">
+                    <button onclick="showScreen('screen-results')" class="text-gray-500 hover:text-blue-600 mr-4 p-2 rounded-full hover:bg-gray-100"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 class="text-2xl font-bold">Specialist Profile</h2>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <!-- Profile Header -->
+                    <div class="bg-blue-50 p-8 md:flex items-center space-x-8">
+                        <img src="https://placehold.co/128x128/93C5FD/3B82F6?text=EV" alt="Dr. Vance" class="w-32 h-32 rounded-full border-4 border-white shadow-lg mx-auto md:mx-0">
+                        <div>
+                            <h3 class="text-3xl font-bold mt-4 md:mt-0">Dr. Eleanor Vance, MD, PhD</h3>
+                            <p class="text-blue-700 text-lg">Professor and Chair, Head & Neck Surgical Oncology</p>
+                            <p class="text-gray-600"><i class="fa-solid fa-hospital mr-2"></i>Stanford Health Care, Palo Alto, CA</p>
+                        </div>
+                        <div class="md:ml-auto text-center mt-6 md:mt-0">
+                             <button onclick="showScreen('screen-referral')" class="w-full bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition"><i class="fa-solid fa-paper-plane mr-2"></i> Initiate Referral</button>
+                        </div>
+                    </div>
+                    <!-- Profile Details -->
+                    <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="md:col-span-2">
+                             <h4 class="font-bold text-xl mb-4 border-b pb-2">Areas of Expertise</h4>
+                             <p class="text-gray-600 mb-4">Validated expertise in treating complex conditions of the head and neck, with a focus on post-treatment complications and quality of life.</p>
+                             <div class="flex flex-wrap gap-2">
+                                <span class="bg-blue-100 border border-blue-300 text-blue-800 px-3 py-1 rounded-full font-medium">Osteoradionecrosis of the Mandible</span>
+                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Advanced Oral Cavity Cancer</span>
+                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Microvascular Reconstruction</span>
+                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Robotic Surgery (TORS)</span>
+                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Salivary Gland Tumors</span>
+                             </div>
+                             <h4 class="font-bold text-xl mb-4 border-b pb-2 mt-8">Ongoing Clinical Trials</h4>
+                             <ul class="list-disc list-inside text-gray-600 space-y-2">
+                                 <li><span class="font-semibold text-gray-800">NCT04512345:</span> A Phase II study of immunotherapy in recurrent oral cancers.</li>
+                                 <li><span class="font-semibold text-gray-800">NCT05876543:</span> Novel imaging techniques for surgical margin assessment.</li>
+                             </ul>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h4 class="font-bold text-xl mb-4">Referral Information</h4>
+                            <div class="space-y-4 text-sm">
+                                <p><strong class="block text-gray-800">Accepted Referrals:</strong> Confirmed cases of mandibular osteoradionecrosis, complex post-radiation defects.</p>
+                                <p><strong class="block text-gray-800">Intake Protocol:</strong> Please include recent imaging (CT/MRI reports) and pathology reports with referral packet.</p>
+                                <p><strong class="block text-gray-800">Est. Wait Time:</strong> <span class="font-semibold text-red-600">4-6 weeks</span></p>
+                                <p><strong class="block text-gray-800">Contact:</strong> 650-555-1234 (Clinic Coordinator)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCREEN 4: Referral Form -->
+            <div id="screen-referral" class="screen animate-fade-in">
+                <div class="flex items-center mb-6">
+                    <button onclick="showScreen('screen-profile')" class="text-gray-500 hover:text-blue-600 mr-4 p-2 rounded-full hover:bg-gray-100"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 class="text-2xl font-bold">Create New Referral</h2>
+                </div>
+                <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+                    <div class="grid grid-cols-2 gap-8 text-sm mb-8">
+                        <p><strong>From:</strong><br>Dr. Anya Sharma<br>Palo Alto Primary Care</p>
+                        <p><strong>To:</strong><br>Dr. Eleanor Vance<br>Stanford Health Care</p>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="font-semibold block mb-1">Patient Name</label>
+                            <input type="text" value="John Doe" class="w-full p-3 border rounded-md bg-gray-50">
+                        </div>
+                         <div>
+                            <label class="font-semibold block mb-1">Reason for Referral</label>
+                            <textarea class="w-full p-3 border rounded-md bg-gray-50 h-28">Patient presents with suspected post-radiation mandibular osteomyelitis following treatment for squamous cell carcinoma of the tongue. Requesting consultation for evaluation and management.</textarea>
+                        </div>
+                        <div>
+                            <label class="font-semibold block mb-1">Attach Documents</label>
+                            <div class="mt-2 border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                                <i class="fa-solid fa-cloud-arrow-up text-4xl text-gray-400"></i>
+                                <p class="mt-2 text-gray-600">Drag & drop files here or <button class="text-blue-600 font-semibold hover:underline">browse</button></p>
+                                <p class="text-xs text-gray-500 mt-1">Accepted: PDF, DOCX, JPG, PNG, DICOM</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                             <button onclick="showScreen('screen-search')" class="w-full sm:w-auto bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition"><i class="fa-solid fa-lock mr-2"></i> Send Secure Referral</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Store the previously active screen
+        let lastScreen = 'screen-search';
+
+        function showScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                if (screen.classList.contains('active')) {
+                    lastScreen = screen.id; // Update last screen before hiding
+                }
+                screen.classList.remove('active');
+            });
+            // Show the target screen
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+                window.scrollTo(0, 0); // Scroll to top on screen change
+            }
+        }
+    </script>
+
+</body>
+</html>
+
