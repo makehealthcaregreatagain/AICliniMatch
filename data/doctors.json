@@ -1,0 +1,393 @@
+[
+  {
+    "id": "vance",
+    "name": "Dr. Eleanor Vance, MD, PhD",
+    "img": "https://placehold.co/80x80/93C5FD/3B82F6?text=EV",
+    "specialty": "Head & Neck Surgical Oncology",
+    "location": "Stanford Health Care, Palo Alto, CA",
+    "zip": "94304",
+    "lat": 37.397,
+    "lng": -122.166,
+    "keywords": "oral cancer, jaw reconstruction, osteoradionecrosis, post-radiation mandibular osteomyelitis, stanford health care, palo alto, nct04512345, nct05876543, immunotherapy, imaging",
+    "telehealth": false,
+    "accepting": true,
+    "sub_specialty": "Professor and Chair, Head & Neck Surgical Oncology",
+    "bio": "Validated expertise in treating complex conditions of the head and neck, with a focus on post-treatment complications and quality of life.",
+    "tags": ["Osteoradionecrosis of the Mandible", "Advanced Oral Cavity Cancer", "Microvascular Reconstruction", "Robotic Surgery (TORS)", "Salivary Gland Tumors"],
+    "trials": [
+      { "id": "NCT04512345", "desc": "A Phase II study of immunotherapy in recurrent oral cancers." },
+      { "id": "NCT05876543", "desc": "Novel imaging techniques for surgical margin assessment." }
+    ],
+    "referral_info": {
+      "accepted": "Confirmed cases of mandibular osteoradionecrosis, complex post-radiation defects.",
+      "protocol": "Please include recent imaging (CT/MRI reports) and pathology reports with referral packet.",
+      "wait_time": "4-6 weeks",
+      "contact": "650-555-1234 (Clinic Coordinator)"
+    },
+    "keynote_speaking": [
+      "Keynote Speaker - American Head & Neck Society Annual Meeting 2024",
+      "Invited Speaker - Stanford Medicine Grand Rounds on Post-Radiation Complications",
+      "Panelist - International Conference on Oral Cancer Reconstruction 2023"
+    ]
+  },
+  {
+    "id": "tanaka",
+    "name": "Dr. Kenji Tanaka, DDS",
+    "img": "https://placehold.co/80x80/FCA5A5/991B1B?text=KT",
+    "specialty": "Oral & Maxillofacial Surgery",
+    "location": "MD Anderson Cancer Center, Houston, TX",
+    "zip": "77030",
+    "lat": 29.705,
+    "lng": -95.401,
+    "keywords": "osteoradionecrosis, oral surgery, md anderson cancer center, houston, nct06010203, hyperbaric",
+    "telehealth": false,
+    "accepting": true,
+    "sub_specialty": "Oral & Maxillofacial Surgery",
+    "bio": "Dedicated to the surgical management of oral cancers and complications from cancer therapy, including osteoradionecrosis.",
+    "tags": ["Osteoradionecrosis", "Dental Oncology", "Head and Neck Cancer Survivorship"],
+    "trials": [
+      { "id": "NCT06010203", "desc": "Trial using hyperbaric oxygen therapy for severe osteoradionecrosis." }
+    ],
+    "referral_info": {
+      "accepted": "Patients with oral complications from radiation therapy or chemotherapy.",
+      "protocol": "Oncology summary and radiation treatment plan must be provided.",
+      "wait_time": "2-3 weeks",
+      "contact": "713-555-8765 (Surgery Center)"
+    }
+  },
+  {
+    "id": "garcia",
+    "name": "Dr. Maria Garcia, MD",
+    "img": "https://placehold.co/80x80/BEF264/3F6212?text=MG",
+    "specialty": "Radiation Oncology",
+    "location": "Duke University Hospital, Durham, NC",
+    "zip": "27710",
+    "lat": 36.0,
+    "lng": -78.938,
+    "keywords": "osteoradionecrosis, radiation oncology, duke university hospital, durham",
+    "telehealth": true,
+    "accepting": true,
+    "sub_specialty": "Radiation Oncology",
+    "bio": "Focuses on minimizing and managing side effects of radiation therapy for head and neck cancers, including ORN.",
+    "tags": ["Osteoradionecrosis", "Radiation Side Effect Management", "IMRT"],
+    "trials": [],
+    "referral_info": {
+      "accepted": "Patients with post-radiation complications.",
+      "protocol": "Via Duke Health provider portal.",
+      "wait_time": "3-4 weeks",
+      "contact": "919-555-1111"
+    }
+  },
+  {
+    "id": "samuel_lee",
+    "name": "Dr. Samuel Lee, DMD",
+    "img": "https://placehold.co/80x80/A5F3FC/0E7490?text=SL",
+    "specialty": "Prosthodontics",
+    "location": "University of Michigan, Ann Arbor, MI",
+    "zip": "48109",
+    "lat": 42.283,
+    "lng": -83.748,
+    "keywords": "osteoradionecrosis, prosthodontics, university of michigan, ann arbor",
+    "telehealth": false,
+    "accepting": true,
+    "sub_specialty": "Prosthodontics",
+    "bio": "Specializes in the prosthetic rehabilitation of patients with complex jaw defects resulting from surgery or radiation.",
+    "tags": ["Osteoradionecrosis", "Maxillofacial Prosthetics", "Dental Implants"],
+    "trials": [],
+    "referral_info": {
+      "accepted": "Patients requiring prosthetic jaw reconstruction.",
+      "protocol": "Dental records and imaging required.",
+      "wait_time": "5-7 weeks",
+      "contact": "734-555-2222"
+    }
+  },
+  {
+    "id": "thorne",
+    "name": "Dr. Marcus Thorne, MD",
+    "img": "https://placehold.co/80x80/FDBA74/C2410C?text=MT",
+    "specialty": "Movement Disorders Neurology",
+    "location": "Johns Hopkins Hospital, Baltimore, MD",
+    "zip": "21287",
+    "lat": 39.296,
+    "lng": -76.592,
+    "keywords": "huntington's disease, parkinson's, dystonia, neurology, johns hopkins hospital, baltimore, nct06123456, gene therapy",
+    "telehealth": true,
+    "accepting": true,
+    "sub_specialty": "Director, Movement Disorders Center",
+    "bio": "Leading expert in the diagnosis and management of Huntington's disease and other neurodegenerative movement disorders.",
+    "tags": ["Huntington's Disease", "Parkinson's Disease", "Dystonia", "Deep Brain Stimulation"],
+    "trials": [
+      { "id": "NCT06123456", "desc": "Gene therapy trial for early-stage Huntington's disease." }
+    ],
+    "referral_info": {
+      "accepted": "Genetically confirmed Huntington's disease, complex Parkinsonism.",
+      "protocol": "Genetic test results must be included in referral packet.",
+      "wait_time": "2-3 weeks",
+      "contact": "410-555-9876 (Neurology Intake)"
+    }
+  },
+  {
+    "id": "carter",
+    "name": "Dr. Ben Carter, PhD",
+    "img": "https://placehold.co/80x80/C4B5FD/5B21B6?text=BC",
+    "specialty": "Neurogenetics",
+    "location": "Cleveland Clinic, Cleveland, OH",
+    "zip": "44195",
+    "lat": 41.503,
+    "lng": -81.621,
+    "keywords": "huntington's disease, neurology, cleveland clinic, cleveland, genetic counseling",
+    "telehealth": true,
+    "accepting": true,
+    "sub_specialty": "Neurogenetics",
+    "bio": "Clinical researcher and genetic counselor specializing in adult-onset neurogenetic disorders, particularly Huntington's disease and hereditary ataxias.",
+    "tags": ["Huntington's Disease", "Spinocerebellar Ataxia", "Genetic Counseling", "Predictive Testing"],
+    "trials": [],
+    "referral_info": {
+      "accepted": "Patients with a family history of Huntington's for counseling and testing.",
+      "protocol": "Referral from a primary neurologist is preferred.",
+      "wait_time": "2-4 weeks",
+      "contact": "216-555-5432 (Genomic Medicine Institute)"
+    }
+  },
+  {
+    "id": "rodriguez",
+    "name": "Dr. Olivia Rodriguez, MD",
+    "img": "https://placehold.co/80x80/FDA4AF/881337?text=OR",
+    "specialty": "Neurology",
+    "location": "UCLA Medical Center, Los Angeles, CA",
+    "zip": "90095",
+    "lat": 34.072,
+    "lng": -118.444,
+    "keywords": "huntington's disease, neurology, ucla medical center, los angeles, clinical trials",
+    "telehealth": true,
+    "accepting": false,
+    "sub_specialty": "Neurology",
+    "bio": "Principal investigator for several leading clinical trials targeting the progression of Huntington's disease.",
+    "tags": ["Huntington's Disease", "Clinical Trials", "Neurodegenerative Disease"],
+    "trials": [
+      { "id": "NCT07123456", "desc": "A study on a novel small molecule for HD symptom management." }
+    ],
+    "referral_info": {
+      "accepted": "Only for clinical trial enrollment.",
+      "protocol": "Contact trial coordinator.",
+      "wait_time": "Varies",
+      "contact": "310-555-3333"
+    }
+  },
+  {
+    "id": "david_chen",
+    "name": "Dr. David Chen, MD, PhD",
+    "img": "https://placehold.co/80x80/99F6E4/0D9488?text=DC",
+    "specialty": "Neuropsychiatry",
+    "location": "Massachusetts General Hospital, Boston, MA",
+    "zip": "02114",
+    "lat": 42.361,
+    "lng": -71.068,
+    "keywords": "huntington's disease, psychiatry, massachusetts general hospital, boston",
+    "telehealth": true,
+    "accepting": true,
+    "sub_specialty": "Neuropsychiatry",
+    "bio": "Specializes in the psychiatric and cognitive symptoms associated with Huntington's disease, including depression and apathy.",
+    "tags": ["Huntington's Disease", "Cognitive Decline", "Neuropsychiatry"],
+    "trials": [],
+    "referral_info": {
+      "accepted": "HD patients with significant behavioral or cognitive symptoms.",
+      "protocol": "Standard hospital referral.",
+      "wait_time": "4-6 weeks",
+      "contact": "617-555-4444"
+    }
+  },
+  {
+    "id": "petrova",
+    "name": "Dr. Lena Petrova, MD",
+    "img": "https://placehold.co/80x80/86EFAC/15803D?text=LP",
+    "specialty": "Adult Cystic Fibrosis Program",
+    "location": "National Jewish Health, Denver, CO",
+    "zip": "80206",
+    "lat": 39.732,
+    "lng": -104.954,
+    "keywords": "cystic fibrosis, bronchiectasis, mucus clearance, pulmonology, national jewish health, denver, nct05554321, modulator",
+    "telehealth": true,
+    "accepting": true,
+    "sub_specialty": "Co-Director, Adult Cystic Fibrosis Program",
+    "bio": "Focuses on managing adult patients with Cystic Fibrosis, including advanced lung disease and post-transplant care.",
+    "tags": ["Cystic Fibrosis", "Bronchiectasis", "Mucus Clearance Therapies", "Lung Transplant Evaluation"],
+    "trials": [
+      { "id": "NCT05554321", "desc": "Study of novel modulator therapies in CF patients with rare mutations." }
+    ],
+    "referral_info": {
+      "accepted": "Adults (18+) with confirmed diagnosis of Cystic Fibrosis.",
+      "protocol": "Sweat chloride test and mutation analysis required.",
+      "wait_time": "1-2 weeks",
+      "contact": "303-555-1122 (CF Clinic Navigator)"
+    },
+    "keynote_speaking": [
+      "Keynote Speaker - Cystic Fibrosis Foundation Annual Conference 2024",
+      "Invited Speaker - American Thoracic Society on CF Modulator Therapies",
+      "Panelist - National Jewish Health Grand Rounds on Adult CF Care"
+    ]
+  },
+  {
+    "id": "khan",
+    "name": "Dr. Aisha Khan, MD",
+    "img": "https://placehold.co/80x80/67E8F9/0E7490?text=AK",
+    "specialty": "Pediatric Pulmonology",
+    "location": "Boston Children's Hospital, Boston, MA",
+    "zip": "02115",
+    "lat": 42.339,
+    "lng": -71.104,
+    "keywords": "cystic fibrosis, pediatric pulmonology, boston children's hospital, boston, nct05998877, asthma",
+    "telehealth": true,
+    "accepting": true,
+    "sub_specialty": "Pediatric Pulmonology",
+    "bio": "Focuses on complex respiratory diseases in children, with a primary research interest in Cystic Fibrosis and non-invasive ventilation.",
+    "tags": ["Cystic Fibrosis (Pediatric)", "Primary Ciliary Dyskinesia", "Severe Asthma"],
+    "trials": [
+      { "id": "NCT05998877", "desc": "A study on the efficacy of a new inhaled antibiotic for children with CF." }
+    ],
+    "referral_info": {
+      "accepted": "Children and adolescents up to age 21 with complex lung diseases.",
+      "protocol": "Via Epic referrals from pediatric primary care providers.",
+      "wait_time": "3-5 weeks",
+      "contact": "617-555-6789 (Pulmonology Front Desk)"
+    }
+  },
+  {
+    "id": "michael_brown",
+    "name": "Dr. Michael Brown, MD",
+    "img": "https://placehold.co/80x80/FDE68A/854D0E?text=MB",
+    "specialty": "Pulmonology & Gastroenterology",
+    "location": "Emory University Hospital, Atlanta, GA",
+    "zip": "30322",
+    "lat": 33.8,
+    "lng": -84.323,
+    "keywords": "cystic fibrosis, gastroenterology, emory university hospital, atlanta",
+    "telehealth": true,
+    "accepting": true,
+    "sub_specialty": "Pulmonology & Gastroenterology",
+    "bio": "Dual-specialist focusing on both the pulmonary and gastrointestinal manifestations of adult Cystic Fibrosis.",
+    "tags": ["Cystic Fibrosis", "Pancreatic Insufficiency", "CF-related Diabetes"],
+    "trials": [],
+    "referral_info": {
+      "accepted": "Adult CF patients, especially those with complex GI issues.",
+      "protocol": "Standard referral.",
+      "wait_time": "2-4 weeks",
+      "contact": "404-555-5555"
+    }
+  },
+  {
+    "id": "williams",
+    "name": "Dr. Sophia Williams, MD",
+    "img": "https://placehold.co/80x80/D8B4FE/581C87?text=SW",
+    "specialty": "Pulmonology",
+    "location": "UT Southwestern Medical Center, Dallas, TX",
+    "zip": "75390",
+    "lat": 32.816,
+    "lng": -96.84,
+    "keywords": "cystic fibrosis, pulmonology, ut southwestern, dallas",
+    "telehealth": true,
+    "accepting": true,
+    "sub_specialty": "Pulmonology",
+    "bio": "Expert in emerging modulator therapies and personalized medicine approaches for Cystic Fibrosis.",
+    "tags": ["Cystic Fibrosis", "Modulator Therapies", "Personalized Medicine"],
+    "trials": [],
+    "referral_info": {
+      "accepted": "All adult CF patients.",
+      "protocol": "Referral with genetic testing results.",
+      "wait_time": "3-4 weeks",
+      "contact": "214-555-6666"
+    }
+  },
+  {
+    "id": "diaz",
+    "name": "Dr. Samuel Diaz, MD",
+    "img": "https://placehold.co/80x80/F9A8D4/9D266A?text=SD",
+    "specialty": "Connective Tissue Disorders Clinic",
+    "location": "Mayo Clinic, Rochester, MN",
+    "zip": "55905",
+    "lat": 44.022,
+    "lng": -92.466,
+    "keywords": "ehlers-danlos syndrome, marfan syndrome, genetics, connective tissue, mayo clinic, rochester",
+    "telehealth": false,
+    "accepting": false,
+    "sub_specialty": "Connective Tissue Disorders Clinic",
+    "bio": "Specializes in the diagnosis and multidisciplinary management of hereditary connective tissue disorders like Ehlers-Danlos and Marfan syndrome.",
+    "tags": ["Ehlers-Danlos Syndrome", "Marfan Syndrome", "Loeys-Dietz syndrome", "Genetic Aortopathies"],
+    "trials": [],
+    "referral_info": {
+      "accepted": "Referrals for suspected or confirmed hereditary connective tissue disorders.",
+      "protocol": "Extensive family history and any genetic testing results are required.",
+      "wait_time": "3-4 months",
+      "contact": "507-555-0123 (Genetics Dept.)"
+    }
+  },
+  {
+    "id": "martinez",
+    "name": "Dr. Isabella Martinez, MD",
+    "img": "https://placehold.co/80x80/A78BFA/4C1D95?text=IM",
+    "specialty": "Rheumatology",
+    "location": "Johns Hopkins Hospital, Baltimore, MD",
+    "zip": "21287",
+    "lat": 39.296,
+    "lng": -76.592,
+    "keywords": "ehlers-danlos syndrome, rheumatology, johns hopkins hospital, baltimore, hypermobility",
+    "telehealth": true,
+    "accepting": true,
+    "sub_specialty": "Rheumatology",
+    "bio": "Focuses on the musculoskeletal and chronic pain aspects of hypermobile Ehlers-Danlos syndrome (hEDS).",
+    "tags": ["Ehlers-Danlos Syndrome", "Hypermobility Spectrum Disorders", "Chronic Pain"],
+    "trials": [],
+    "referral_info": {
+      "accepted": "Patients with hypermobility-related joint pain.",
+      "protocol": "Requires a prior rheumatology workup.",
+      "wait_time": "6-8 weeks",
+      "contact": "410-555-7777"
+    }
+  },
+  {
+    "id": "johnson",
+    "name": "Dr. Noah Johnson, MD",
+    "img": "https://placehold.co/80x80/7DD3FC/0369A1?text=NJ",
+    "specialty": "Cardiology",
+    "location": "Vanderbilt University Medical Center, Nashville, TN",
+    "zip": "37232",
+    "lat": 36.141,
+    "lng": -86.803,
+    "keywords": "ehlers-danlos syndrome, cardiology, vanderbilt, nashville, vascular",
+    "telehealth": false,
+    "accepting": true,
+    "sub_specialty": "Cardiology",
+    "bio": "Specialist in the cardiovascular manifestations of connective tissue disorders, particularly vascular Ehlers-Danlos syndrome (vEDS).",
+    "tags": ["Ehlers-Danlos Syndrome (vEDS)", "Aortic Dissection", "Marfan Syndrome"],
+    "trials": [],
+    "referral_info": {
+      "accepted": "Patients with confirmed or suspected vEDS.",
+      "protocol": "Genetic test results are mandatory.",
+      "wait_time": "2-3 weeks",
+      "contact": "615-555-8888"
+    }
+  },
+  {
+    "id": "chen",
+    "name": "Dr. Jian Chen, MD",
+    "img": "https://placehold.co/80x80/A5B4FC/4338CA?text=JC",
+    "specialty": "Reconstructive Microsurgery",
+    "location": "UCSF Medical Center, San Francisco, CA",
+    "zip": "94143",
+    "lat": 37.763,
+    "lng": -122.458,
+    "keywords": "maxillofacial trauma, head & neck reconstruction, ucsf medical center, san francisco",
+    "telehealth": false,
+    "accepting": false,
+    "sub_specialty": "Professor, Reconstructive Microsurgery",
+    "bio": "Specializes in complex reconstructions following major trauma or cancer resection in the head and neck region.",
+    "tags": ["Maxillofacial Trauma", "Head & Neck Reconstruction", "Free Flap Surgery"],
+    "trials": [],
+    "referral_info": {
+      "accepted": "Complex facial trauma, patients requiring microsurgical reconstruction.",
+      "protocol": "Referrals accepted through UCSF provider portal.",
+      "wait_time": "8-10 weeks (waitlisted)",
+      "contact": "415-555-5678 (Surgical Coordinator)"
+    }
+  }
+]

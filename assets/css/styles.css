@@ -1,0 +1,20 @@
+body {
+  background-color: #f8fafc; /* Tailwind gray-50 */
+}
+
+/* Screen visibility */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* Scrollbar aesthetics */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+/* Animations */
+.animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Advanced search chevron */
+#advanced-search-toggle .fa-chevron-down { transition: transform 0.3s ease-in-out; }

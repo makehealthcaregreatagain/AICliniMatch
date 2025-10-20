@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AICliniMatch - Search</title>
+
+  <!-- Tailwind + fonts + icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body class="text-gray-800" style="font-family:'Inter',sans-serif;">
+  <div class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+      <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+        <a href="index.html" class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-blue-600 text-white flex items-center justify-center rounded-full">
+            <i class="fa-solid fa-share-nodes"></i>
+          </div>
+          <h1 class="text-xl font-bold text-gray-800">AICliniMatch</h1>
+        </a>
+        <div class="flex items-center space-x-4">
+          <span onclick="showReferralsPage()" class="text-sm text-gray-600 hidden sm:block cursor-pointer hover:text-blue-600">Dr. Anya Sharma</span>
+          <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=AS" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-gray-200">
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <main class="flex-grow container mx-auto p-4 sm:p-6 lg:p-8">
+      <!-- SCREEN 1: Search Dashboard -->
+      <div id="screen-search" class="screen active animate-fade-in">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 class="text-3xl sm:text-4xl font-bold text-gray-800">Find the right specialist, faster.</h2>
+          <p class="mt-4 text-lg text-gray-600">Search by condition, procedure, phenotype, or specialist name to find verified experts across the country.</p>
+          <div class="mt-8 flex rounded-lg shadow-lg overflow-hidden">
+            <input id="main-search-input" type="text" placeholder='e.g., “cystic fibrosis”' class="w-full px-6 py-4 text-lg border-0 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <button onclick="performSearch()" class="bg-blue-600 text-white px-8 py-4 font-semibold hover:bg-blue-700 transition duration-300">
+              <i class="fa-solid fa-search mr-2"></i> Search
+            </button>
+          </div>
+
+          <!-- Advanced Search Toggle -->
+          <div class="text-center mt-4">
+            <a id="advanced-search-toggle" onclick="toggleAdvancedSearch()" class="text-blue-600 hover:underline cursor-pointer text-sm font-medium">
+              Advanced Search <i class="fa-solid fa-chevron-down text-xs ml-1"></i>
+            </a>
+          </div>
+
+          <!-- Advanced Search Form -->
+          <div id="advanced-search-form" class="hidden mt-4 bg-gray-50 p-6 rounded-lg shadow-inner text-left">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="adv-location" class="block text-sm font-medium text-gray-700">Geography</label>
+                <input type="text" id="adv-location" placeholder="ZIP (e.g., 11101)" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <p class="text-xs text-gray-500 mt-1">Enter a 5-digit ZIP; results will be filtered by radius.</p>
+              </div>
+
+              <div>
+                <label for="adv-radius" class="block text-sm font-medium text-gray-700">Radius</label>
+                <select id="adv-radius" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                  <option value="25">25 miles</option>
+                  <option value="50">50 miles</option>
+                  <option value="100" selected>100 miles</option>
+                  <option value="250">250 miles</option>
+                  <option value="9999">Any distance</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="adv-institution" class="block text-sm font-medium text-gray-700">Institution</label>
+                <input type="text" id="adv-institution" list="institution-options" placeholder="e.g., 'Stanford Health Care'" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <!-- Dynamic options (populated per disease search) -->
+                <datalist id="institution-options"></datalist>
+              </div>
+
+              <div>
+                <label for="adv-trials" class="block text-sm font-medium text-gray-700">Clinical Trial Keywords</label>
+                <input type="text" id="adv-trials" list="trial-options" placeholder="Keyword or NCT ID (e.g., 'immunotherapy', 'NCT04512345')" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <!-- Dynamic options (populated per disease search) -->
+                <datalist id="trial-options"></datalist>
+              </div>
+            </div>
+
+            <div class="mt-6 flex items-center justify-start space-x-6">
+              <label class="flex items-center text-sm font-medium text-gray-700">
+                <input type="checkbox" id="adv-telehealth" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                <span class="ml-2">Telehealth Available</span>
+              </label>
+              <label class="flex items-center text-sm font-medium text-gray-700">
+                <input type="checkbox" id="adv-accepting" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                <span class="ml-2">Accepting New Referrals</span>
+              </label>
+            </div>
+          </div>
+
+
+          <div class="mt-6 text-sm text-gray-600 bg-gray-100 p-4 rounded-lg text-left">
+            <h3 class="font-semibold text-gray-700 mb-2">Recent Searches:</h3>
+            <p class="text-gray-500">
+              <a href="#" onclick="runDemoSearch('osteoradionecrosis')" class="text-blue-600 hover:underline">osteoradionecrosis</a>,
+              <a href="#" onclick="runDemoSearch('huntington\'s disease')" class="text-blue-600 hover:underline">huntington's disease</a>,
+              <a href="#" onclick="runDemoSearch('cystic fibrosis')" class="text-blue-600 hover:underline">cystic fibrosis</a>,
+              <a href="#" onclick="runDemoSearch('ehlers-danlos syndrome')" class="text-blue-600 hover:underline">ehlers-danlos syndrome</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 2: Search Results -->
+      <div id="screen-results" class="screen animate-fade-in">
+        <div class="flex items-center mb-6">
+          <button onclick="showScreen('screen-search')" class="text-gray-500 hover:text-blue-600 mr-4 p-2 rounded-full hover:bg-gray-100"><i class="fa-solid fa-arrow-left"></i></button>
+          <h2 class="text-2xl font-bold">Results for: <span id="search-results-term" class="text-blue-600">""</span></h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <!-- Filters Column -->
+          <aside class="lg:col-span-1 bg-white p-6 rounded-xl shadow-md h-fit">
+            <h3 class="font-bold text-lg mb-4">Filter Results</h3>
+            <div class="mb-6">
+              <label class="block font-semibold mb-2 text-sm">Location</label>
+              <input type="text" placeholder="City, State, or Zip" class="w-full p-2 border rounded-md text-sm">
+              <label class="flex items-center mt-2 text-sm"><input type="checkbox" class="mr-2"> Telehealth Available</label>
+            </div>
+            <div class="mb-6">
+              <label class="block font-semibold mb-2 text-sm">Insurance</label>
+              <button onclick="toggleInsuranceFilter()" class="w-full p-2 border rounded-md text-sm text-left bg-white hover:bg-gray-50 flex justify-between items-center">
+                <span id="insurance-filter-text">Select Insurance Plans</span>
+                <i id="insurance-filter-icon" class="fa-solid fa-chevron-down text-xs"></i>
+              </button>
+              <div id="insurance-filter-options" class="hidden mt-2 border rounded-md bg-white max-h-40 overflow-y-auto">
+                <label class="flex items-center p-2 hover:bg-gray-50 cursor-pointer">
+                  <input type="checkbox" class="insurance-checkbox mr-2" value="Aetna PPO">
+                  <span class="text-sm">Aetna PPO</span>
+                </label>
+                <label class="flex items-center p-2 hover:bg-gray-50 cursor-pointer">
+                  <input type="checkbox" class="insurance-checkbox mr-2" value="Blue Cross Blue Shield">
+                  <span class="text-sm">Blue Cross Blue Shield</span>
+                </label>
+                <label class="flex items-center p-2 hover:bg-gray-50 cursor-pointer">
+                  <input type="checkbox" class="insurance-checkbox mr-2" value="Cigna">
+                  <span class="text-sm">Cigna</span>
+                </label>
+                <label class="flex items-center p-2 hover:bg-gray-50 cursor-pointer">
+                  <input type="checkbox" class="insurance-checkbox mr-2" value="UnitedHealthcare">
+                  <span class="text-sm">UnitedHealthcare</span>
+                </label>
+                <label class="flex items-center p-2 hover:bg-gray-50 cursor-pointer">
+                  <input type="checkbox" class="insurance-checkbox mr-2" value="Kaiser Permanente">
+                  <span class="text-sm">Kaiser Permanente</span>
+                </label>
+                <label class="flex items-center p-2 hover:bg-gray-50 cursor-pointer">
+                  <input type="checkbox" class="insurance-checkbox mr-2" value="Medicare">
+                  <span class="text-sm">Medicare</span>
+                </label>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Results List -->
+          <div id="results-list" class="lg:col-span-3 space-y-4">
+            <div id="no-results-message" class="hidden text-center py-10 bg-gray-50 rounded-lg">
+              <i class="fa-solid fa-magnifying-glass text-4xl text-gray-400"></i>
+              <h3 class="mt-4 text-xl font-semibold text-gray-700">No Specialists Found</h3>
+              <p class="mt-1 text-gray-500">Try adjusting your search term or filters.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 3: Expert Profile -->
+      <div id="screen-profile" class="screen animate-fade-in">
+        <div class="flex items-center mb-6">
+          <button onclick="showScreen('screen-results')" class="text-gray-500 hover:text-blue-600 mr-4 p-2 rounded-full hover:bg-gray-100"><i class="fa-solid fa-arrow-left"></i></button>
+          <h2 class="text-2xl font-bold">Specialist Profile</h2>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-blue-50 p-8 md:flex items-center space-x-8">
+            <img id="profile-img" src="" alt="Doctor" class="w-32 h-32 rounded-full border-4 border-white shadow-lg mx-auto md:mx-0">
+            <div>
+              <h3 id="profile-name" class="text-3xl font-bold mt-4 md:mt-0"></h3>
+              <p id="profile-subspecialty" class="text-blue-700 text-lg"></p>
+              <p id="profile-location" class="text-gray-600"></p>
+            </div>
+            <div id="profile-refer-button-container" class="md:ml-auto text-center mt-6 md:mt-0"></div>
+          </div>
+          <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="md:col-span-2">
+              <h4 class="font-bold text-xl mb-4 border-b pb-2">Areas of Expertise</h4>
+              <p id="profile-bio" class="text-gray-600 mb-4"></p>
+              <div id="profile-tags" class="flex flex-wrap gap-2"></div>
+              <h4 class="font-bold text-xl mb-4 border-b pb-2 mt-8">Ongoing Clinical Trials</h4>
+              <ul id="profile-trials" class="list-disc list-inside text-gray-600 space-y-2"></ul>
+              <h4 class="font-bold text-xl mb-4 border-b pb-2 mt-8">Keynote & Speaking Engagements</h4>
+              <ul id="profile-keynote" class="list-disc list-inside text-gray-600 space-y-2"></ul>
+            </div>
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h4 class="font-bold text-xl mb-4">Referral Information</h4>
+              <div class="space-y-4 text-sm">
+                <p><strong class="block text-gray-800">Accepted Referrals:</strong> <span id="referral-accepted"></span></p>
+                <p><strong class="block text-gray-800">Intake Protocol:</strong> <span id="referral-protocol"></span></p>
+                <p><strong class="block text-gray-800">Contact:</strong> <span id="referral-contact"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 4: Referral Form -->
+      <div id="screen-referral" class="screen animate-fade-in">
+        <div class="flex items-center mb-6">
+          <button onclick="showScreen('screen-profile')" class="text-gray-500 hover:text-blue-600 mr-4 p-2 rounded-full hover:bg-gray-100"><i class="fa-solid fa-arrow-left"></i></button>
+          <h2 class="text-2xl font-bold">Create New Referral</h2>
+        </div>
+        <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+          <div class="grid grid-cols-2 gap-8 text-sm mb-8">
+            <p><strong>From:</strong><br>Dr. Anya Sharma<br>Palo Alto Primary Care</p>
+            <p><strong>To:</strong><br><span id="referral-to-name"></span><br><span id="referral-to-location"></span></p>
+          </div>
+          <div class="space-y-6">
+            <div>
+              <label class="font-semibold block mb-1">Patient Name</label>
+              <input type="text" placeholder="Enter patient name" class="w-full p-3 border rounded-md bg-gray-50">
+            </div>
+            <div>
+              <label class="font-semibold block mb-1">Reason for Referral</label>
+              <textarea class="w-full p-3 border rounded-md bg-gray-50 h-28" placeholder="Enter reason for referral..."></textarea>
+            </div>
+            <div>
+              <label class="font-semibold block mb-1">Attach Documents</label>
+              <div id="document-drop-zone" class="mt-2 border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                <i class="fa-solid fa-cloud-arrow-up text-4xl text-gray-400"></i>
+                <p class="mt-2 text-gray-600">Drag & drop files here or <button onclick="document.getElementById('file-input').click()" class="text-blue-600 font-semibold hover:underline">browse</button></p>
+                <p class="text-xs text-gray-500 mt-1">Accepted: PDF, DOCX, JPG, PNG, DICOM</p>
+                <input type="file" id="file-input" multiple accept=".pdf,.docx,.jpg,.jpeg,.png,.dcm" class="hidden">
+                <div id="uploaded-files" class="mt-4 space-y-2"></div>
+              </div>
+            </div>
+            <div class="text-right">
+              <button onclick="submitReferralForm()" class="w-full sm:w-auto bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition">
+                <i class="fa-solid fa-lock mr-2"></i> Send Secure Referral
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 5: Referrals Tracking -->
+      <div id="screen-referrals" class="screen animate-fade-in">
+        <div class="flex items-center mb-6">
+          <button onclick="showScreen('screen-search')" class="text-gray-500 hover:text-blue-600 mr-4 p-2 rounded-full hover:bg-gray-100"><i class="fa-solid fa-arrow-left"></i></button>
+          <h2 class="text-2xl font-bold">My Referrals</h2>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="p-6 border-b">
+            <h3 class="text-lg font-semibold text-gray-800">Referral History - Dr. Anya Sharma</h3>
+            <p class="text-sm text-gray-600 mt-1">Track your patient referrals and their status</p>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient Name</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Specialist</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Referred</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Documents</th>
+                </tr>
+              </thead>
+              <tbody id="referrals-table-body" class="bg-white divide-y divide-gray-200">
+                <!-- Referrals will be populated here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- JS (order matters: render + geo + search utilities, then app bootstrap) -->
+  <script defer src="assets/js/render.js"></script>
+  <script defer src="assets/js/geo.js"></script>
+  <script defer src="assets/js/search.js"></script>
+  <script defer src="assets/js/app.js"></script>
+</body>
+</html>
+
+
